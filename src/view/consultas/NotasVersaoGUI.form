@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jplTitulo" alignment="1" max="32767" attributes="1"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="801" max="-2" attributes="0"/>
+                          <Component id="jbtFechar" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jplTitulo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="358" max="-2" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
+              <Component id="jbtFechar" min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jplTitulo">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jlbTituloJanela" min="-2" pref="737" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jlbTituloJanela" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jlbTituloJanela">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="i.getProperty(&quot;princ42&quot;)" type="code"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="jbtFechar">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="i.getProperty(&quot;sis10&quot;)" type="code"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtFecharActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="jTextArea1">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="V5.1&#xa;* Adicionado atalho para acesso a tela de ajuste de estoque.&#xa;&#xa;V5.0&#xa;* Adicionado campo de valor nos relat&#xf3;rios de abastecimentos e consumo m&#xe9;dio.&#xa;* Nova tela restrita para ajustes de registros.&#xa;* Nova tela restrita para excluir abastecimentos.&#xa;* Nova tela restrita para consulta de abastecimentos com od&#xf4;metros e hor&#xed;metros atuais menores que os anteriores.&#xa;&#xa;V4.2&#xa;* Implementado regra para n&#xe3;o permitir abastecimentos no TWC para bicos inativos.&#xa;* Implementado tela de hist&#xf3;rico de libera&#xe7;&#xf5;es no menu Abastecimentos.&#xa;&#xa;V4.1&#xa;* Implementado par&#xe2;metro para informar a quantidade de vias para impress&#xe3;o de cupom.&#xa;&#xa;V4.0&#xa;* Implementado e adequado as rotinas do sistema para permitir o controle de motoristas nos abastecimentos.&#xa;* Implementado rotina para impress&#xe3;o de cupom n&#xe3;o fiscal (Impressora Bematech MP-4200 TH).&#xa;* Realizado melhoria em todos os cadastros para permitir ordena&#xe7;&#xe3;o das colunas com apenas o clique nelas.&#xa;* Melhoria do cadastro de operador. Inclu&#xed;do novo campo &quot;Master&quot;.&#xa;* Implementado novo menu TWC para operadores master. (n&#xe3;o requer identifica&#xe7;&#xe3;o de ve&#xed;culo e od&#xf4;metro/hor&#xed;metro).&#xa;&#xa;V3.1&#xa;* Implementado novo par&#xe2;metro para permitir que a leitura do bico no TWC possa ser atrav&#xe9;s de leitura por TAG ou por c&#xf3;digo do sistema.&#xa;&#xa;V3.0&#xa;* Implementado novo par&#xe2;metro para acesso ao sistema sem necessidade de login.&#xa;* Inserido regra no cadastro de operador para bloquear o cadastro de identificadores em duplicidade.&#xa;&#xa;V2.9&#xa;* Inserido rotina para registro de abastecimento externo.&#xa;* Inserido integra&#xe7;&#xe3;o com terminal m&#xf3;vel TWC.&#xa;* Inserido pesquisa por nome (ENTER) no cadastro de ve&#xed;culo.&#xa;&#xa;V2.8&#xa;* Inserido controle de estoque para os combust&#xed;veis.&#xa;* Inserido rotina para sincroniza&#xe7;&#xe3;o de comboios.&#xa;&#xa;V2.7&#xa;* Limitado Od&#xf4;metros e Hor&#xed;metros a apenas 6 caracteres&#xa;&#xa;V2.6&#xa;* Implementado controle de licen&#xe7;a.&#xa;&#xa;V2.5&#xa;* Adicionado relat&#xf3;rio para exibir od&#xf4;metro/hor&#xed;metro atual dos ve&#xed;culos.&#xa;* Novo campo no cadastro de ve&#xed;culo para exibir od&#xf4;metro/hor&#xed;metro atual.&#xa;* Nova tela para atualiza&#xe7;&#xe3;o do banco de dados (restrito).&#xa;* Corrigido problema ao limitar abastecimento quando n&#xe3;o exitir quantidade liberada para frota.&#xa;&#xa;V2.4&#xa;* Corre&#xe7;&#xe3;o do limite de abastecimento de frota para n&#xe3;o permitir abastecimento quando limite dispon&#xed;vel acabar.&#xa;* Ajustes na tela de configura&#xe7;&#xe3;o ao informar o valor por litro com quantidade menor de 4 caracteres.&#xa;* Melhorias de layout.&#xa;* Inserido tela para visualiza&#xe7;&#xe3;o nas notas de Vers&#xe3;o/Release.&#xa;&#xa;V2.3&#xa;* Ajustes para funcionamento no Linux.&#xa;&#xa;V2.2&#xa;* Tela para lan&#xe7;amento manual de abastecimento.&#xa;* N&#xe3;o permitir que um operador abaste&#xe7;a veiculo de outra empresa.&#xa;* N&#xe3;o permitir cadastro de operador com mesmo login.&#xa;* Nos relat&#xf3;rios exibir o nome do operador que emitiu o relat&#xf3;rio.&#xa;* Relat&#xf3;rio de m&#xe9;dia por veiculo exibir a m&#xe9;dia geral.&#xa;* Dados da Empresa nos relat&#xf3;rios.&#xa;* Configura&#xe7;&#xe3;o de casas decimais da bomba."/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Texto"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

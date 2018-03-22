@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.0.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4968b807-1001-4d1c-b5fb-6767455eab09">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conection Firebird"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FAFAD2">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="280e6a89-4661-47cb-ba18-d68ea36671d7"/>
+	<parameter name="DATA_INICIAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2000-01-01 00:00:00"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_FINAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2100-01-01 00:00:00"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPRESA_INICIAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FROTA_INICIAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VEICULO_INICIAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPRESA_FINAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[99999999]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FROTA_FINAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[99999999]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VEICULO_FINAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[99999999]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OPERADOR" class="java.lang.String"/>
+	<parameter name="NOME_EMPRESA" class="java.lang.String"/>
+	<parameter name="ENDERECO_COMPLETO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     (SELECT COUNT(ABASTECIMENTOS."IDABASTEC") FROM
+     "OPERADORES" OPERADORES RIGHT JOIN "ABASTECIMENTOS" ABASTECIMENTOS ON OPERADORES."SEQOPERADOR" = ABASTECIMENTOS."SEQOPERADOR"
+     LEFT JOIN "VEICULOS" VEICULOS_A ON ABASTECIMENTOS."SEQVEICULO" = VEICULOS_A."SEQVEICULO"
+     LEFT JOIN "BICOS" BICOS ON ABASTECIMENTOS."SEQBICO" = BICOS."SEQBICO"
+     LEFT JOIN "FROTAS" FROTAS ON VEICULOS_A."SEQFROTA" = FROTAS."SEQFROTA"
+     LEFT JOIN "EMPRESAS" EMPRESAS ON FROTAS."SEQEMPRESA" = EMPRESAS."SEQEMPRESA" WHERE DATAHORA > $P{DATA_INICIAL} AND DATAHORA < $P{DATA_FINAL} AND EMPRESAS."SEQEMPRESA" >= $P{EMPRESA_INICIAL} AND EMPRESAS."SEQEMPRESA" <= $P{EMPRESA_FINAL} AND FROTAS."SEQFROTA" >= $P{FROTA_INICIAL} AND FROTAS."SEQFROTA" <= $P{FROTA_FINAL} AND VEICULOS_A."SEQVEICULO" >= $P{VEICULO_INICIAL} AND VEICULOS_A."SEQVEICULO" <= $P{VEICULO_FINAL})AS COUNTABASTEC,
+     (SELECT SUM(ABASTECIMENTOS."VOLUME") FROM
+     "OPERADORES" OPERADORES RIGHT JOIN "ABASTECIMENTOS" ABASTECIMENTOS ON OPERADORES."SEQOPERADOR" = ABASTECIMENTOS."SEQOPERADOR"
+     LEFT JOIN "VEICULOS" VEICULOS_A ON ABASTECIMENTOS."SEQVEICULO" = VEICULOS_A."SEQVEICULO"
+     LEFT JOIN "BICOS" BICOS ON ABASTECIMENTOS."SEQBICO" = BICOS."SEQBICO"
+     LEFT JOIN "FROTAS" FROTAS ON VEICULOS_A."SEQFROTA" = FROTAS."SEQFROTA"
+     LEFT JOIN "EMPRESAS" EMPRESAS ON FROTAS."SEQEMPRESA" = EMPRESAS."SEQEMPRESA" WHERE DATAHORA > $P{DATA_INICIAL} AND DATAHORA < $P{DATA_FINAL} AND EMPRESAS."SEQEMPRESA" >= $P{EMPRESA_INICIAL} AND EMPRESAS."SEQEMPRESA" <= $P{EMPRESA_FINAL} AND FROTAS."SEQFROTA" >= $P{FROTA_INICIAL} AND FROTAS."SEQFROTA" <= $P{FROTA_FINAL} AND VEICULOS_A."SEQVEICULO" >= $P{VEICULO_INICIAL} AND VEICULOS_A."SEQVEICULO" <= $P{VEICULO_FINAL})AS TOTVOLUME,
+     
+     (SELECT SUM(ABASTECIMENTOS."TOTALPAGAR") FROM
+     "OPERADORES" OPERADORES RIGHT JOIN "ABASTECIMENTOS" ABASTECIMENTOS ON OPERADORES."SEQOPERADOR" = ABASTECIMENTOS."SEQOPERADOR"
+     LEFT JOIN "VEICULOS" VEICULOS_A ON ABASTECIMENTOS."SEQVEICULO" = VEICULOS_A."SEQVEICULO"
+     LEFT JOIN "BICOS" BICOS ON ABASTECIMENTOS."SEQBICO" = BICOS."SEQBICO"
+     LEFT JOIN "FROTAS" FROTAS ON VEICULOS_A."SEQFROTA" = FROTAS."SEQFROTA"
+     LEFT JOIN "EMPRESAS" EMPRESAS ON FROTAS."SEQEMPRESA" = EMPRESAS."SEQEMPRESA" 
+     WHERE
+     DATAHORA >= $P{DATA_INICIAL} AND DATAHORA <= $P{DATA_FINAL}
+ AND EMPRESAS."SEQEMPRESA" >= $P{EMPRESA_INICIAL} AND EMPRESAS."SEQEMPRESA" <= $P{EMPRESA_FINAL}
+ AND FROTAS."SEQFROTA" >= $P{FROTA_INICIAL} AND FROTAS."SEQFROTA" <= $P{FROTA_FINAL}
+ AND VEICULOS_A."SEQVEICULO" >= $P{VEICULO_INICIAL} AND VEICULOS_A."SEQVEICULO" <=$P{VEICULO_FINAL}) AS TOTAL_PAGAR,
+     
+     
+     
+     ABASTECIMENTOS."IDABASTEC" AS ABASTECIMENTOS_IDABASTEC,
+     ABASTECIMENTOS."DATAHORA" AS ABASTECIMENTOS_DATAHORA,
+     ABASTECIMENTOS."VOLUME" AS ABASTECIMENTOS_VOLUME,
+     ABASTECIMENTOS."TEMPOABASTECIMENTO" AS ABASTECIMENTOS_TEMPOABASTECIMEN,
+     ABASTECIMENTOS."SEQBICO" AS ABASTECIMENTOS_IDBICO,
+     ABASTECIMENTOS."SEQVEICULO" AS ABASTECIMENTOS_IDVEICULO,
+     ABASTECIMENTOS."SEQOPERADOR" AS ABASTECIMENTOS_IDOPERADOR,
+     ABASTECIMENTOS."PRECOUNITARIO" AS ABASTECIMENTOS_PRECOUNITARIO,
+     ABASTECIMENTOS."TOTALPAGAR" AS ABASTECIMENTOS_TOTALPAGAR,
+     OPERADORES."SEQOPERADOR" AS OPERADORES_IDOPERADOR,
+     OPERADORES."NOMEOPERADOR" AS OPERADORES_NOMEOPERADOR,
+     VEICULOS_A."SEQVEICULO" AS VEICULOS_A_IDVEICULO,
+     VEICULOS_A."NOMEVEICULO" AS VEICULOS_A_NOMEVEICULO,
+     VEICULOS_A."SEQCOMBUSTIVEL" AS VEICULOS_A_IDCOMBUSTIVEL,
+     BICOS."SEQBICO" AS BICOS_IDBICO,
+     BICOS."NOMEBICO" AS BICOS_NOMEBICO,
+     BICOS."SEQCOMBUSTIVEL" AS BICOS_IDCOMBUSTIVEL,
+     EMPRESAS."SEQEMPRESA" AS EMPRESAS_IDEMPRESA,
+     EMPRESAS."NOMEEMPRESA" AS EMPRESAS_NOMEEMPRESA,
+     VEICULOS_A."SEQFROTA" AS VEICULOS_A_IDFROTA,
+     FROTAS."SEQFROTA" AS FROTAS_IDFROTA,
+     FROTAS."NOMEFROTA" AS FROTAS_NOMEFROTA,
+     MOTORISTAS."SEQMOTORISTA" AS MOTORISTAS_IDMOTORISTA,
+     MOTORISTAS."NOMEMOTORISTA" AS MOTORISTAS_NOMEMOTORISTA,
+     FROTAS."SEQEMPRESA" AS FROTAS_IDEMPRESA
+FROM
+     "OPERADORES" OPERADORES RIGHT JOIN "ABASTECIMENTOS" ABASTECIMENTOS ON OPERADORES."SEQOPERADOR" = ABASTECIMENTOS."SEQOPERADOR"
+     LEFT JOIN "VEICULOS" VEICULOS_A ON ABASTECIMENTOS."SEQVEICULO" = VEICULOS_A."SEQVEICULO"
+     LEFT JOIN "BICOS" BICOS ON ABASTECIMENTOS."SEQBICO" = BICOS."SEQBICO"
+     LEFT JOIN "FROTAS" FROTAS ON VEICULOS_A."SEQFROTA" = FROTAS."SEQFROTA"
+     LEFT JOIN "EMPRESAS" EMPRESAS ON FROTAS."SEQEMPRESA" = EMPRESAS."SEQEMPRESA"
+     LEFT JOIN "MOTORISTAS" MOTORISTAS ON ABASTECIMENTOS."SEQMOTORISTA" = MOTORISTAS."SEQMOTORISTA"
+WHERE
+     DATAHORA >= $P{DATA_INICIAL} AND DATAHORA <= $P{DATA_FINAL}
+ AND EMPRESAS."SEQEMPRESA" >= $P{EMPRESA_INICIAL} AND EMPRESAS."SEQEMPRESA" <= $P{EMPRESA_FINAL}
+ AND FROTAS."SEQFROTA" >= $P{FROTA_INICIAL} AND FROTAS."SEQFROTA" <= $P{FROTA_FINAL}
+ AND VEICULOS_A."SEQVEICULO" >= $P{VEICULO_INICIAL} AND VEICULOS_A."SEQVEICULO" <=$P{VEICULO_FINAL}
+ORDER BY
+     IDABASTEC DESC]]>
+	</queryString>
+	<field name="COUNTABASTEC" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="COUNTABASTEC"/>
+	</field>
+	<field name="TOTVOLUME" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="TOTVOLUME"/>
+	</field>
+	<field name="TOTAL_PAGAR" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_PAGAR"/>
+	</field>
+	<field name="ABASTECIMENTOS_IDABASTEC" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_IDABASTEC"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_DATAHORA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_DATAHORA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_VOLUME" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_VOLUME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_TEMPOABASTECIMEN" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_TEMPOABASTECIMEN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_IDBICO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_IDBICO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_IDVEICULO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_IDVEICULO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_IDOPERADOR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_IDOPERADOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_PRECOUNITARIO" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_PRECOUNITARIO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="ABASTECIMENTOS_TOTALPAGAR" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="ABASTECIMENTOS_TOTALPAGAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ABASTECIMENTOS"/>
+	</field>
+	<field name="OPERADORES_IDOPERADOR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="OPERADORES_IDOPERADOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="OPERADORES"/>
+	</field>
+	<field name="OPERADORES_NOMEOPERADOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPERADORES_NOMEOPERADOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="OPERADORES"/>
+	</field>
+	<field name="VEICULOS_A_IDVEICULO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="VEICULOS_A_IDVEICULO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="VEICULOS"/>
+	</field>
+	<field name="VEICULOS_A_NOMEVEICULO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VEICULOS_A_NOMEVEICULO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="VEICULOS"/>
+	</field>
+	<field name="VEICULOS_A_IDCOMBUSTIVEL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="VEICULOS_A_IDCOMBUSTIVEL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="VEICULOS"/>
+	</field>
+	<field name="BICOS_IDBICO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="BICOS_IDBICO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="BICOS"/>
+	</field>
+	<field name="BICOS_NOMEBICO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BICOS_NOMEBICO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="BICOS"/>
+	</field>
+	<field name="BICOS_IDCOMBUSTIVEL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="BICOS_IDCOMBUSTIVEL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="BICOS"/>
+	</field>
+	<field name="EMPRESAS_IDEMPRESA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="EMPRESAS_IDEMPRESA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="EMPRESAS"/>
+	</field>
+	<field name="EMPRESAS_NOMEEMPRESA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMPRESAS_NOMEEMPRESA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="EMPRESAS"/>
+	</field>
+	<field name="VEICULOS_A_IDFROTA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="VEICULOS_A_IDFROTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="VEICULOS"/>
+	</field>
+	<field name="FROTAS_IDFROTA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="FROTAS_IDFROTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FROTAS"/>
+	</field>
+	<field name="FROTAS_NOMEFROTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FROTAS_NOMEFROTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FROTAS"/>
+	</field>
+	<field name="MOTORISTAS_IDMOTORISTA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="MOTORISTAS_IDMOTORISTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MOTORISTAS"/>
+	</field>
+	<field name="MOTORISTAS_NOMEMOTORISTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MOTORISTAS_NOMEMOTORISTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MOTORISTAS"/>
+	</field>
+	<field name="FROTAS_IDEMPRESA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="FROTAS_IDEMPRESA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="FROTAS"/>
+	</field>
+	<variable name="TOT_VOLUME" class="java.lang.Double" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{ABASTECIMENTOS_VOLUME}]]></variableExpression>
+	</variable>
+	<variable name="TOT_ABASTECIMENTOS" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{ABASTECIMENTOS_IDABASTEC}]]></variableExpression>
+	</variable>
+	<variable name="TOTPAGAR" class="java.lang.Double" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{ABASTECIMENTOS_TOTALPAGAR}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="28" width="801" height="1" uuid="f0365ce7-7980-4e5e-bfb1-09a0a251425e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="801" height="12" uuid="a327e820-abe3-4dd0-8cf4-ab0571e30a7e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOME_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="12" width="801" height="15" uuid="8ad1a8de-b7a0-4b5c-887b-bfd1dcae7e73"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ENDERECO_COMPLETO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="801" height="26" uuid="62740f2c-628a-48a6-8156-9683ca44394b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Abastecimentos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="21" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="bbdd5ea5-dad3-4806-b170-8fab6595bd0c"/>
+				<staticText>
+					<reportElement x="3" y="0" width="100" height="20" uuid="28931268-24de-47ac-a6a3-0065a8518f1a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Data/Hora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="105" y="0" width="59" height="20" uuid="d3e88c6d-7b98-4ac1-846f-aece7a0ef308"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Est. Abastec]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="177" y="0" width="43" height="20" uuid="ee29231e-14b4-48ed-818e-8774b0d4b8bf"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Volume]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="223" y="0" width="54" height="20" uuid="feee7441-fa23-4e81-9e1d-c3d8bedb7d93"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Preço Unit.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="334" y="0" width="123" height="20" uuid="79b10c6b-e241-4d53-8662-96b4381f1d5a"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Veículo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="691" y="0" width="110" height="20" uuid="051f9e43-ca50-40b3-b90e-a7df30c49a0e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Operador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="457" y="0" width="87" height="20" uuid="1d898a32-411a-4b65-9585-df16f226de18"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Frota]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="546" y="0" width="145" height="20" uuid="d24f2d69-6f76-4d16-97e7-afd97bd161b6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Motorista]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="278" y="0" width="54" height="20" uuid="72602605-b0e2-4db4-8d6f-af9a35936e5e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+					</textElement>
+					<text><![CDATA[Vlr. Total]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="0" width="72" height="13" uuid="7e6afccb-9036-46ec-a7bf-8db4608268f9"/>
+				<textElement>
+					<font fontName="Verdana" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BICOS_NOMEBICO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss" isBlankWhenNull="true">
+				<reportElement x="4" y="0" width="100" height="14" uuid="9cfde50e-86f6-4d26-aef5-5d2196afaecd"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABASTECIMENTOS_DATAHORA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="4" y="12" width="798" height="1" uuid="d95fbe6e-b6ec-4f70-b040-2b320a09ab10"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0.000;-###0.000" isBlankWhenNull="true">
+				<reportElement x="223" y="0" width="54" height="13" uuid="31620c68-5af8-4685-8d7f-18d9bb53a1b9"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABASTECIMENTOS_PRECOUNITARIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="177" y="0" width="35" height="13" uuid="d79684ed-2009-485b-b67f-739dede88673"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABASTECIMENTOS_VOLUME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="691" y="0" width="111" height="13" uuid="0c58b93d-99db-4aca-9d89-4701c0ec02ed"/>
+				<textElement>
+					<font fontName="Verdana" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPERADORES_NOMEOPERADOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="546" y="1" width="145" height="11" uuid="4193e71e-23b7-4304-884b-30a91444b826"/>
+				<textElement>
+					<font fontName="Verdana" size="8"/>
+					<paragraph lineSpacing="AtLeast"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MOTORISTAS_NOMEMOTORISTA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="457" y="1" width="87" height="12" uuid="a84185fc-1575-479a-a473-361f51196e01"/>
+				<textElement>
+					<font fontName="Verdana" size="8"/>
+					<paragraph lineSpacing="AtLeast"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FROTAS_NOMEFROTA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="334" y="0" width="123" height="13" uuid="fac2fd7e-809b-4d29-ae24-12c35937bdd2"/>
+				<textElement>
+					<font fontName="Verdana" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEICULOS_A_NOMEVEICULO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="278" y="0" width="54" height="13" uuid="e5ac1cac-4986-424a-bf8d-8d5741a3dfeb"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABASTECIMENTOS_TOTALPAGAR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="-5" width="801" height="1" uuid="13df817e-e3eb-4bbe-89b9-fa18a419bcf0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="173" y="2" width="100" height="18" uuid="aef3d18f-953c-476a-a3a5-11a72596d8cb"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOT_VOLUME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="67" y="2" width="106" height="18" uuid="71f35e48-50ea-48ea-aaaf-e065f190e2b8"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Volume (Página)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="2" width="143" height="18" uuid="6bc5b78e-cb8c-4201-b63c-f011b97b15c3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Abastecimentos (Página)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="2" width="100" height="18" uuid="9f4c5949-95af-4574-99a6-37c853f69f82">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOT_ABASTECIMENTOS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="19" width="100" height="18" uuid="75e166a8-6606-421e-a69e-455e8164542f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COUNTABASTEC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="173" y="19" width="100" height="18" uuid="2d816f32-d6e6-42d6-b27b-29e7fbb60832"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTVOLUME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="67" y="19" width="107" height="18" uuid="73ef3486-d079-40d2-a791-446a4638e5e6"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Volume (Geral)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="19" width="143" height="18" uuid="8b2b7c10-36ac-40a1-bd75-22c982471a70"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Abastecimentos (Geral)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="525" y="2" width="95" height="18" uuid="1dc3bb54-6764-456c-b161-ffb01d9d6c06"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Valor Total (Página)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="525" y="19" width="95" height="18" uuid="3f639220-961b-422e-8841-cf9e6b2534c3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Valor Total (Geral)]]></text>
+			</staticText>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="621" y="2" width="100" height="18" uuid="6edfea97-cf46-47c3-a32d-65d1c2d56339">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTPAGAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="621" y="19" width="100" height="18" uuid="937d29d2-33dc-4f07-abce-f7c4e6077e48">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Verdana" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_PAGAR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="1" width="801" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="52830682-beb8-4038-8eb0-09e6e6623ac5"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="754" y="2" width="40" height="20" forecolor="#736343" uuid="67f66460-7712-40eb-8a42-42f2431d23a6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="674" y="2" width="80" height="20" forecolor="#736343" uuid="5741d21d-eab1-4bb7-8908-f4df116635dc"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy HH:mm:ss" isBlankWhenNull="true">
+					<reportElement style="Column header" x="3" y="2" width="201" height="20" forecolor="#736343" uuid="00bb02bf-65df-4410-a9c0-1acb2382d97c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="Column header" x="279" y="2" width="201" height="20" forecolor="#736343" uuid="f3b07084-79a4-4127-b613-144a3d0c1320"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{OPERADOR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="208" y="2" width="68" height="20" forecolor="#736343" uuid="3a51a643-41cb-403c-bffc-1e79d81b1288"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Emitido por:"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
